@@ -1,0 +1,21 @@
+{
+  "parserOptions": {
+    "ecmaVersion": 9,
+    "sourceType": "module"
+  },
+  "env": {
+    "node": true
+  },
+  "globals": {
+    "global": false,
+    "Promise": true
+  },
+  "rules": {
+    "semi": "error",
+    "indent": ["error", 2, { "SwitchCase": 1 }],
+    "no-undef": ["error", { "typeof": true }],
+    "no-unused-vars": ["error", { "ignoreRestSiblings": true, "argsIgnorePattern": "^_" }],
+    "object-curly-spacing": ["error", "always"],
+    "space-in-parens": ["error", "never"]
+  }
+}
