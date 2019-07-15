@@ -5,11 +5,16 @@ const { clientId, clientSecret, appAuthToken } = require('./config');
 const authLib = require('./lib/auth');
 const botLib = require('./lib/bot');
 
+const PORT = process.env.PORT || 3000;
+const callbackURL = process.env.APP_ENV === 'heroku' ?
+  'https://youtube-stop-scam-bot.herokuapp.com/callback' :
+  `http://localhost:${PORT}/callback`;
+
 passport.use(new YoutubeV3Strategy(
   {
     clientID: clientId,
-    clientSecret: clientSecret,
-    callbackURL: 'http://localhost:3000/callback',
+    clientSecret,
+    callbackURL,
     scope: ['https://www.googleapis.com/auth/youtube.force-ssl']
   },
   function (accessToken, refreshToken, _profile, done) {
@@ -34,8 +39,8 @@ app.get(
 );
 app.get('/callback', passport.authenticate('youtube'));
 
-app.listen(3000, () => {
-  console.log('We are live on 3000');
+app.listen(PORT, () => {
+  console.log(`We are live on ${PORT}`);
   setInterval(authLib.refreshToken, 59 * 60000); // 59m
   setTimeout(botLib.main, 60000); // 1m
 });
